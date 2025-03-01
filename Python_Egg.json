@@ -1,0 +1,42 @@
+{
+    "_comment": "Egg for running Python Discord bots on Pterodactyl",
+    "meta": {
+        "version": "PTDL_v1",
+        "update_url": null
+    },
+    "exported_at": "2025-03-01T00:00:00Z",
+    "name": "Python Discord Bot",
+    "author": "nachoco@example.com",
+    "description": "Egg for running Discord bots with Python on Pterodactyl.",
+    "features": null,
+    "images": [
+        "python:3.10",
+        "python:3.11",
+        "python:3.12"
+    ],
+    "startup": "pip install -r requirements.txt && python bot.py",
+    "config": {
+        "files": "{}",
+        "startup": "{ \"done\": \"Bot is running\", \"userInteraction\": [] }",
+        "logs": "{ \"custom\": false, \"location\": \"logs/latest.log\" }",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "apt update && apt install -y python3 python3-pip && pip install -r /mnt/server/requirements.txt",
+            "container": "debian:latest",
+            "entrypoint": "/bin/bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Startup Command",
+            "description": "Command to run your bot",
+            "env_variable": "STARTUP_CMD",
+            "default_value": "python bot.py",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:256"
+        }
+    ]
+}
